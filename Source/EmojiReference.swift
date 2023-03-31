@@ -22,6 +22,8 @@
 //  THE SOFTWARE.
 //
 
+import Foundation
+
 internal class EmojiReference {
     internal var emojiList : Array<Emoji> = []
     
@@ -29,10 +31,11 @@ internal class EmojiReference {
     private var emojiHashcodes : Dictionary<String, Bool> = [:]
     
     init() {
+        let bundle = Bundle(for: EmojiReference.self)
         //Try to read path to file
-        if let path = Bundle(for: EmojiReference.self).path(forResource: "emojis", ofType: "json") {
-            if let data = NSData(contentsOfFile: path) {
-                if let jsonData = try? JSONSerialization.jsonObject(with: data as Data, options: .mutableContainers) as! Dictionary<String, Dictionary<String, Array<Dictionary<String, AnyObject>>>> {
+        if let path = bundle.url(forResource: "emojis", withExtension: "json", subdirectory: "Resources") {
+            if let data = try? Data(contentsOf: path) {
+                if let jsonData = try? JSONSerialization.jsonObject(with: data as Data, options: .mutableContainers) as? Dictionary<String, Dictionary<String, Array<Dictionary<String, AnyObject>>>> {
                     for (group, subgroups) in jsonData {
                         for (subgroup, emojis) in subgroups {
                             for emoji in emojis {

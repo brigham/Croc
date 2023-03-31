@@ -1,7 +1,7 @@
 import string
 import re
 import json
-import urllib
+import urllib.request
 
 def strip_emojis(line):
 	PERMITTED_CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-: " 
@@ -20,7 +20,7 @@ subgroup_prefix = "# subgroup: "
 delimiter = ";"
 
 print("Retrieving latest emoji data file...")
-urllib.urlretrieve(url_file_path + emoji_test_file, emoji_test_file)
+urllib.request.urlretrieve(url_file_path + emoji_test_file, emoji_test_file)
 
 lines = list(open(emoji_test_file))
 emojis = dict()
